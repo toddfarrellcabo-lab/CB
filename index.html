@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ye Ole Creative Brief Compiler</title>
+<title><span class="ye-ole">Ye Ole</span> Creative Brief Compiler</title>
 <link rel="stylesheet" href="sparklight-brief-compiler.css" />
 </head>
 
@@ -16,8 +16,7 @@
 
   <section class="hero">
     <div class="hero-copy">
-      <p class="kicker">A Problematic Tool</p>
-      <h1>Ye Ole Creative Brief Compiler</h1>
+      <h1><span class="ye-ole">Ye Ole</span> Creative Brief Compiler</h1>
       <p class="hero-subhead">A cleaner way to turn strategy, offers, mandatories, and deliverables into one usable creative brief.</p>
     </div>
 
@@ -301,8 +300,9 @@
   </main>
 
   <footer class="footer">
-    * Creative briefs should align messaging, emotional insight, audience behavior, deliverables, legal requirements, and approved Sparklight® positioning before launch.
-    <br>© 2026 Sparklight® — A Problematic Tool.
+    <p>* Creative briefs should align messaging, emotional insight, audience behavior, deliverables, legal requirements, and approved Sparklight® positioning before launch.</p>
+    <p class="tool-tag">A Problematic Tool.</p>
+    <p>© 2026 Sparklight®</p>
   </footer>
 
 </div>
@@ -317,7 +317,6 @@ function getBriefText(){
   const data = new FormData(form);
 
   let output = "YE OLE CREATIVE BRIEF COMPILER\\n";
-  output += "A Problematic Tool.\\n";
   output += "==========================\\n\\n";
 
   for (const [key, value] of data.entries()){

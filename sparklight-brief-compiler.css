@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 
 :root{
-  --sp-purple:#8A2E90;
-  --sp-purple-dark:#5F1F7A;
+  --sp-purple:#8e3c91;
+  --sp-purple-dark:#8e3c91;
   --sp-purple-soft:#F4E7F8;
   --sp-purple-softer:#FAF4FC;
   --sp-ink:#20272B;
@@ -39,7 +41,7 @@ body{
 
 .sparklight-logo{
   display:block;
-  width:clamp(220px, 34vw, 420px);
+  width:clamp(180px, 24vw, 300px);
   height:auto;
 }
 
@@ -54,9 +56,9 @@ body{
   padding:42px clamp(24px, 5vw, 64px);
   border-radius:34px;
   background:
-    radial-gradient(circle at 76% 50%, rgba(138,46,144,.24), transparent 34%),
+    radial-gradient(circle at 76% 50%, rgba(142,60,145,.24), transparent 34%),
     linear-gradient(135deg, #fff 0%, #fbf6fd 42%, #efdff7 100%);
-  box-shadow:0 16px 50px rgba(95,31,122,.10);
+  box-shadow:0 16px 50px rgba(142,60,145,.10);
 }
 
 .hero::before{
@@ -64,7 +66,7 @@ body{
   position:absolute;
   inset:0;
   background:
-    linear-gradient(125deg, transparent 0 44%, rgba(138,46,144,.10) 44% 56%, transparent 56%),
+    linear-gradient(125deg, transparent 0 44%, rgba(142,60,145,.10) 44% 56%, transparent 56%),
     radial-gradient(circle at 10% 15%, rgba(255,255,255,.9), transparent 30%);
   pointer-events:none;
 }
@@ -75,29 +77,32 @@ body{
   z-index:1;
 }
 
-.kicker{
-  margin:0 0 14px;
-  color:var(--sp-purple);
-  font-size:1rem;
-  font-weight:800;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-}
 
 .hero h1{
   margin:0;
-  color:var(--sp-purple-dark);
-  font-size:clamp(3.4rem, 7.8vw, 6.9rem);
-  line-height:.9;
-  letter-spacing:-.085em;
+  color:var(--sp-purple);
+  font-size:clamp(2.15rem, 5.35vw, 4.45rem);
+  line-height:.98;
+  letter-spacing:-.045em;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.hero h1 .ye-ole{
+  font-family:"Cinzel", serif;
+  font-weight:800;
+  letter-spacing:.015em;
+  margin-right:.18em;
+  display:inline-block;
 }
 
 .hero-subhead{
-  max-width:570px;
-  margin:22px 0 0;
+  max-width:520px;
+  margin:14px 0 0;
   color:#2E3540;
-  font-size:clamp(1.25rem, 2.25vw, 1.85rem);
-  line-height:1.25;
+  font-size:clamp(.88rem, 1.45vw, 1.08rem);
+  line-height:1.35;
+  text-align:left;
 }
 
 .hero-visual{
@@ -111,7 +116,7 @@ body{
   height:auto;
   display:block;
   border-radius:999px;
-  filter:drop-shadow(0 22px 28px rgba(95,31,122,.22));
+  filter:drop-shadow(0 22px 28px rgba(142,60,145,.22));
 }
 
 .form-card{
@@ -234,7 +239,7 @@ input:focus,
 select:focus,
 textarea:focus{
   border-color:var(--sp-purple);
-  box-shadow:0 0 0 4px rgba(138,46,144,.14);
+  box-shadow:0 0 0 4px rgba(142,60,145,.14);
 }
 
 .offer-grid{
@@ -306,7 +311,7 @@ button{
 
 button:hover{
   transform:translateY(-2px);
-  box-shadow:0 14px 24px rgba(95,31,122,.13);
+  box-shadow:0 14px 24px rgba(142,60,145,.13);
 }
 
 button.primary{
@@ -317,11 +322,11 @@ button.primary{
 
 .footer{
   max-width:1180px;
-  margin:28px auto 0;
+  margin:24px auto 0;
   text-align:center;
   color:#51475D;
-  font-size:.95rem;
-  line-height:1.55;
+  font-size:.72rem;
+  line-height:1.45;
 }
 
 .toast{
@@ -332,7 +337,7 @@ button.primary{
   transform:translateX(-50%) translateY(12px);
   padding:13px 18px;
   border-radius:999px;
-  background:#20113D;
+  background:#3B173E;
   color:#fff;
   box-shadow:0 14px 34px rgba(0,0,0,.22);
   opacity:0;
@@ -359,70 +364,27 @@ button.primary{
     min-height:auto;
     gap:16px;
     padding:30px 22px 28px;
-    text-align:center;
+    text-align:left;
     border-radius:26px;
   }
 
   .hero h1{
-    font-size:clamp(3rem, 13vw, 5rem);
-  }
-
-  .hero-subhead{
-    margin-left:auto;
-    margin-right:auto;
-    font-size:1.22rem;
-  }
-
-  .hero-dog{
-    width:min(320px, 78vw);
-  }
-
-  .form-card{
-    margin-top:18px;
-    padding:24px 18px 28px;
-    border-radius:22px;
-  }
-
-  .grid,
-  .offer-grid,
-  .upload-row,
-  .actions{
-    grid-template-columns:1fr;
-    gap:18px;
-  }
-
-  .form-title{
-    gap:12px;
-  }
-
-  .form-title svg{
-    width:34px;
-    height:34px;
-  }
-
-  .form-section{
-    margin-top:28px;
-    padding-top:24px;
-  }
+  margin:0;
+  color:var(--sp-purple);
+  font-size:clamp(2.15rem, 5.35vw, 4.45rem);
+  line-height:.98;
+  letter-spacing:-.045em;
+  font-weight:900;
+  white-space:nowrap;
 }
 
-@media(max-width:430px){
-  .page{
-    padding-left:10px;
-    padding-right:10px;
-  }
-
-  .sparklight-logo{
-    width:230px;
-  }
-
-  .hero{
-    padding:26px 16px 24px;
-  }
-
-  .hero h1{
-    font-size:3.2rem;
-  }
+.hero h1 .ye-ole{
+  font-family:"Cinzel", serif;
+  font-weight:800;
+  letter-spacing:.015em;
+  margin-right:.18em;
+  display:inline-block;
+}
 
   input,
   select,
@@ -434,4 +396,17 @@ button.primary{
   button{
     min-height:56px;
   }
+}
+
+
+.footer p{
+  margin:3px 0;
+}
+
+.footer .tool-tag{
+  margin-top:8px;
+  font-size:.62rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:#756A7E;
 }
