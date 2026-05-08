@@ -1,4 +1,3 @@
-
 :root{
   --sp-purple:#8e3c91;
   --sp-purple-dark:#6f2f72;
@@ -25,23 +24,29 @@ body{
   font-family:Arial, Helvetica, sans-serif;
   color:var(--sp-ink);
   background:
-    linear-gradient(180deg,#ffffff 0%,#ffffff 52%,#fbf7fc 100%);
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #ffffff 52%,
+      #fbf7fc 100%
+    );
 }
 
+/* PAGE */
 .page{
   width:min(1180px,100%);
   margin:0 auto;
   padding:22px 20px 44px;
 }
 
+/* HEADER */
 .site-header{
   min-height:76px;
   display:flex;
   align-items:center;
   justify-content:center;
   position:relative;
-  border-bottom:1px solid rgba(38,50,56,.08);
-  padding-bottom: 24px;
+  padding-bottom:28px; /* <- THIS adds spacing */
 }
 
 .sparklight-logo{
@@ -50,6 +55,7 @@ body{
   display:block;
 }
 
+/* HIDE UNUSED ICONS */
 .header-icon,
 .icon,
 .icon-row{
@@ -59,12 +65,16 @@ body{
 /* HERO */
 .hero{
   width:100%;
-  padding:60px 0 46px;
+  padding:24px 0 46px; /* <- additional spacing */
   display:flex;
   justify-content:center;
   align-items:center;
   background:
-    radial-gradient(circle at center, rgba(142,60,145,.06), transparent 56%);
+    radial-gradient(
+      circle at center,
+      rgba(142,60,145,.06),
+      transparent 56%
+    );
 }
 
 .hero-lockup-img{
@@ -73,7 +83,7 @@ body{
   display:block;
 }
 
-/* FORM */
+/* FORM CONTAINER */
 .form-card{
   width:min(980px,100%);
   margin:0 auto;
@@ -88,6 +98,7 @@ body{
   margin:0;
 }
 
+/* FORM SECTIONS */
 .form-section{
   margin-top:44px;
   padding-top:36px;
@@ -100,6 +111,7 @@ body{
   border-top:0;
 }
 
+/* SECTION TITLES */
 .section-title{
   margin:0 0 24px;
   color:var(--sp-purple);
@@ -109,9 +121,11 @@ body{
   letter-spacing:-.015em;
 }
 
+/* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
   gap:24px 34px;
 }
 
@@ -124,6 +138,7 @@ body{
   grid-column:1/-1;
 }
 
+/* LABELS */
 label{
   margin:0 0 8px;
   color:#16212a;
@@ -140,6 +155,7 @@ label{
   font-weight:400;
 }
 
+/* INPUTS */
 input,
 select,
 textarea{
@@ -153,7 +169,9 @@ textarea{
   font:inherit;
   font-size:.95rem;
   outline:none;
-  transition:border-color .18s ease, box-shadow .18s ease;
+  transition:
+    border-color .18s ease,
+    box-shadow .18s ease;
 }
 
 textarea{
@@ -161,44 +179,66 @@ textarea{
   resize:vertical;
 }
 
+/* PLACEHOLDER */
 input::placeholder,
 textarea::placeholder{
   color:#aeb6bc;
-  opacity:.62;
+  opacity:.55;
 }
 
+/* SELECT */
 select{
   color:#727b82;
   appearance:none;
   background-image:
-    linear-gradient(45deg,transparent 50%,#8a9298 50%),
-    linear-gradient(135deg,#8a9298 50%,transparent 50%);
+    linear-gradient(
+      45deg,
+      transparent 50%,
+      #8a9298 50%
+    ),
+    linear-gradient(
+      135deg,
+      #8a9298 50%,
+      transparent 50%
+    );
+
   background-position:
     calc(100% - 22px) 50%,
     calc(100% - 15px) 50%;
-  background-size:7px 7px,7px 7px;
+
+  background-size:
+    7px 7px,
+    7px 7px;
+
   background-repeat:no-repeat;
 }
 
+/* FOCUS */
 input:focus,
 select:focus,
 textarea:focus{
   border-color:var(--sp-purple);
-  box-shadow:0 0 0 4px rgba(142,60,145,.10);
+  box-shadow:
+    0 0 0 4px rgba(142,60,145,.10);
 }
 
+/* OFFER GRID */
 .offer-grid{
   display:grid;
-  grid-template-columns:1.15fr 1fr .8fr;
+  grid-template-columns:
+    1.15fr 1fr .8fr;
+
   gap:18px;
   align-items:end;
   padding:20px;
   margin-bottom:18px;
+
   border:1px solid rgba(38,50,56,.10);
   border-radius:16px;
   background:#fff;
 }
 
+/* UPLOAD */
 .upload-row{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -210,15 +250,20 @@ textarea:focus{
 .file-box{
   min-height:76px;
   padding:16px;
+
   display:flex;
   align-items:center;
   justify-content:center;
   gap:14px;
+
   text-align:center;
+
   border:1.5px dashed rgba(142,60,145,.42);
   border-radius:12px;
+
   background:#fcf8fd;
   color:var(--sp-purple);
+
   cursor:pointer;
 }
 
@@ -239,6 +284,7 @@ textarea:focus{
   font-size:.78rem;
 }
 
+/* BUTTONS */
 .actions{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -249,20 +295,30 @@ textarea:focus{
 button{
   min-height:58px;
   padding:14px 18px;
+
   border:1.5px solid var(--sp-purple);
   border-radius:999px;
+
   background:#fff;
   color:var(--sp-purple);
+
   font:inherit;
   font-size:.98rem;
   font-weight:800;
+
   cursor:pointer;
-  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    background .18s ease;
 }
 
 button:hover{
   transform:translateY(-1px);
-  box-shadow:0 12px 24px rgba(61,43,71,.10);
+
+  box-shadow:
+    0 12px 24px rgba(61,43,71,.10);
 }
 
 button.primary{
@@ -271,11 +327,14 @@ button.primary{
   color:#fff;
 }
 
+/* FOOTER */
 .footer{
   width:min(980px,100%);
   margin:26px auto 0;
+
   text-align:center;
   color:#7f878d;
+
   font-size:.68rem;
   line-height:1.45;
 }
@@ -286,41 +345,59 @@ button.primary{
 
 .footer .tool-tag{
   margin-top:8px;
+
   font-size:.62rem;
   letter-spacing:.06em;
   text-transform:uppercase;
+
   color:#8d9296;
 }
 
+/* TOAST */
 .toast{
   position:fixed;
   left:50%;
   bottom:20px;
-  transform:translateX(-50%) translateY(12px);
+
+  transform:
+    translateX(-50%)
+    translateY(12px);
+
   padding:13px 18px;
+
   border-radius:999px;
+
   background:#263238;
   color:#fff;
-  box-shadow:0 14px 34px rgba(0,0,0,.20);
+
+  box-shadow:
+    0 14px 34px rgba(0,0,0,.20);
+
   opacity:0;
   pointer-events:none;
+
   transition:.2s ease;
   z-index:20;
 }
 
 .toast.show{
   opacity:1;
-  transform:translateX(-50%) translateY(0);
+
+  transform:
+    translateX(-50%)
+    translateY(0);
 }
 
 /* MOBILE */
 @media(max-width:900px){
+
   .page{
     padding:16px 14px 34px;
   }
 
   .site-header{
     min-height:64px;
+    padding-bottom:22px;
   }
 
   .sparklight-logo{
@@ -328,7 +405,7 @@ button.primary{
   }
 
   .hero{
-    padding:38px 0 30px;
+    padding:20px 0 30px;
   }
 
   .hero-lockup-img{
@@ -367,14 +444,16 @@ button.primary{
   }
 }
 
+/* SMALL MOBILE */
 @media(max-width:480px){
+
   .page{
     padding-left:10px;
     padding-right:10px;
   }
 
   .hero{
-    padding:30px 0 22px;
+    padding:16px 0 22px;
   }
 
   .form-card{
