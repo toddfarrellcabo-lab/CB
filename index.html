@@ -532,6 +532,14 @@ button.primary{
   }
 }
 
+
+/* Monday button support */
+@media(max-width:1100px){
+  .actions{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:700px){
+  .actions{grid-template-columns:1fr;}
+}
 </style>
 </head>
 
@@ -651,6 +659,7 @@ button.primary{
         <button type="button" onclick="generateExecutiveBrief()">Preview One-Sheet</button>
         <button type="button" onclick="printExecutiveBrief()">Print Sheet</button>
         <button type="button" onclick="printSummary()">Print Summary</button>
+        <button type="button" onclick="submitToMonday()">Submit to Monday</button>
         <button type="button" onclick="emailBrief()">Email Brief</button>
       </div>
       <p class="email-helper">Email Brief opens a preformatted email body. Use Print Sheet separately when a designed PDF is needed.</p>
@@ -816,6 +825,14 @@ table{width:100%;border-collapse:collapse;font-size:12px}
 th,td{border:1px solid #ddd5e2;padding:9px 10px;text-align:left;vertical-align:top}
 th{width:28%;background:#fbf7fc;color:#8e3c91}
 @media print{@page{size:letter;margin:.35in}body{padding:0}}
+
+/* Monday button support */
+@media(max-width:1100px){
+  .actions{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:700px){
+  .actions{grid-template-columns:1fr;}
+}
 </style></head><body>
 <h1>Creative Brief Summary</h1>
 <table>${tableRows}</table>
@@ -1209,6 +1226,14 @@ body{
   }
 }
 
+
+/* Monday button support */
+@media(max-width:1100px){
+  .actions{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:700px){
+  .actions{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
@@ -1236,6 +1261,86 @@ function printExecutiveBrief(){
   printWindow.document.write(oneSheetMarkup());
   printWindow.document.close();
   printWindow.focus();
+}
+
+
+
+async function submitToMonday(){
+  if(!validateBrief()) return;
+
+  const boardId = 18412398738;
+
+  const columnValues = {
+    "date_mm35xce4": {
+      "date": val("dueBy", "")
+    },
+    "color_mm359tn8": {
+      "label": "New Request"
+    },
+    "dropdown_mm35bzeg": {
+      "labels": val("market", "") ? [val("market", "")] : []
+    },
+    "dropdown_mm35zg7r": {
+      "labels": agencyValue() ? agencyValue().split(", ").filter(Boolean) : []
+    },
+    "long_text_mm35nb64": val("smp", ""),
+    "long_text_mm35bqfb": val("insight", ""),
+    "long_text_mm35b502": val("background", ""),
+    "long_text_mm35cehy": val("keyMessaging", ""),
+    "date_mm3559e5": {
+      "date": val("launchDate", "")
+    },
+    "long_text_mm35aw19": val("objective", "")
+  };
+
+  Object.keys(columnValues).forEach(key => {
+    const value = columnValues[key];
+
+    if(value && typeof value === "object" && "date" in value && !value.date){
+      delete columnValues[key];
+    }
+
+    if(value && typeof value === "object" && "labels" in value && !value.labels.length){
+      delete columnValues[key];
+    }
+  });
+
+  const query = `
+    mutation {
+      create_item(
+        board_id: ${boardId},
+        item_name: ${JSON.stringify(val("projectName", "Untitled Creative Brief"))},
+        column_values: ${JSON.stringify(JSON.stringify(columnValues))}
+      ) {
+        id
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch("https://api.monday.com/v2", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjY1NjAyNDg0OCwiYWFpIjoxMSwidWlkIjozMzI3MTkwOCwiaWFkIjoiMjAyNi0wNS0wOFQyMDo0MDo0Mi41NDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6OTc4MzI3MSwicmduIjoidXNlMSJ9.mkcY-3oyWuy5Ig01s3pVU3-nyOdkN147ZXxSBp1FLZI"
+      },
+      body: JSON.stringify({ query })
+    });
+
+    const data = await response.json();
+    console.log("Monday response:", data);
+
+    if(data.errors){
+      console.error(data.errors);
+      showToast("Monday submission failed. Check console.");
+      return;
+    }
+
+    showToast("Submitted to Monday successfully.");
+  } catch(error){
+    console.error(error);
+    showToast("Connection to Monday failed.");
+  }
 }
 
 
