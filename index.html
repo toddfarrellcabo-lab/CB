@@ -1030,9 +1030,169 @@ function copyBrief(){
   navigator.clipboard.writeText(getBriefText()).then(() => showToast("Brief copied."));
 }
 
-function emailBrief(){
-  if(!validateBrief()) return;
-  generateExecutiveBrief();
+function emailBrief() {
+
+  const form = getFormData();
+
+  const subject = encodeURIComponent(
+
+    `Creative Brief – ${form.projectName || 'Untitled Project'}`
+
+  );
+
+  const emailBody = `
+
+YE OLE CREATIVE BRIEF COMPILER
+
+======================================
+
+PROJECT NAME
+
+${form.projectName || ''}
+
+CAMPAIGN NAME
+
+${form.campaignTimeline || ''}
+
+LAUNCH DATE
+
+${form.launchDate || ''}
+
+CREATIVE DUE BY
+
+${form.dueBy || ''}
+
+REQUESTOR EMAIL
+
+${form.requestorEmail || ''}
+
+PRIMARY OBJECTIVE
+
+${form.primaryObjective || ''}
+
+BACKGROUND
+
+${form.background || ''}
+
+SINGLE-MINDED PROPOSITION
+
+${form.smp || ''}
+
+TARGET AUDIENCE
+
+${form.targetAudience || ''}
+
+TARGET AUDIENCE DETAILS
+
+${form.targetAudienceDetails || ''}
+
+INSIGHT
+
+${form.insight || ''}
+
+BEHAVIOR SHIFT
+
+${form.behaviorObjective || ''}
+
+ENEMY / TENSION
+
+${form.enemy || ''}
+
+EMOTIONAL HOOK & TONE
+
+${form.emotionalTone || ''}
+
+KEY MESSAGING
+
+${form.keyMessaging || ''}
+
+--------------------------------------
+
+OFFERS
+
+--------------------------------------
+
+OFFER 1
+
+Offer:
+
+${form.offer1 || ''}
+
+Secondary Push:
+
+${form.push1 || ''}
+
+CTA:
+
+${form.cta1 || ''}
+
+OFFER 2
+
+Offer:
+
+${form.offer2 || ''}
+
+Secondary Push:
+
+${form.push2 || ''}
+
+CTA:
+
+${form.cta2 || ''}
+
+OFFER 3
+
+Offer:
+
+${form.offer3 || ''}
+
+Secondary Push:
+
+${form.push3 || ''}
+
+CTA:
+
+${form.cta3 || ''}
+
+--------------------------------------
+
+CREATIVE AGENCY
+
+${form.creativeAgency || ''}
+
+DESIRED DELIVERABLES
+
+${form.deliverables || ''}
+
+DELIVERABLE DETAILS
+
+${form.deliverableDetails || ''}
+
+MANDATORIES / LEGALS
+
+${form.mandatories || ''}
+
+ADDITIONAL NOTES
+
+${form.additionalNotes || ''}
+
+MARKET / REGION
+
+${form.market || ''}
+
+======================================
+
+© 2026 Sparklight® — A Problematic Tool.
+
+`;
+
+  const mailtoLink =
+
+    `mailto:?subject=${subject}&body=${encodeURIComponent(emailBody)}`;
+
+  window.location.href = mailtoLink;
+
+}
 
   const projectName = val("projectName", "New Project");
   const subject = encodeURIComponent("Creative Brief Submission: " + projectName);
