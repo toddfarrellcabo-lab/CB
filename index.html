@@ -4,573 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ye Ole Creative Brief Compiler 2.0</title>
-<style>
-:root{
-  --sp-purple:#8e3c91;
-  --sp-purple-dark:#6f2f72;
-  --sp-ink:#263238;
-  --sp-muted:#6b747b;
-  --sp-line:#ddd5e2;
-  --sp-bg:#fbf7fc;
-  --sp-shadow:0 18px 50px rgba(61,43,71,.10);
-}
-
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  min-height:100vh;
-  font-family:Arial, Helvetica, sans-serif;
-  color:var(--sp-ink);
-  background:linear-gradient(180deg,#fff 0%,#fff 55%,#fbf7fc 100%);
-}
-
-.page{
-  width:min(1180px,100%);
-  margin:0 auto;
-  padding:24px 20px 44px;
-}
-
-.site-header{
-  min-height:82px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding-bottom:30px;
-}
-
-.sparklight-logo{
-  width:min(260px,48vw);
-  height:auto;
-  display:block;
-}
-
-.sparklight-wordmark{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:.16em;
-  color:#4c555c;
-  font-size:clamp(2rem,4vw,3.2rem);
-  font-weight:800;
-  line-height:1;
-  letter-spacing:-.055em;
-}
-
-.sparklight-slash{
-  color:var(--sp-purple);
-  font-size:1.18em;
-  font-weight:900;
-  transform:translateY(-.02em);
-}
-
-.sparklight-wordmark sup{
-  font-size:.28em;
-  letter-spacing:0;
-  margin-left:.06em;
-  align-self:flex-start;
-}
-
-.hero{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:34px 0 48px;
-  background:radial-gradient(circle at center,rgba(142,60,145,.06),transparent 56%);
-}
-
-.hero-lockup-img{
-  width:min(960px,92%);
-  height:auto;
-  display:block;
-}
-
-.hero-lockup-img{
-  width:min(1080px,100%);
-  height:auto;
-  display:block;
-  margin:0 auto;
-  border-radius:28px;
-  box-shadow:0 18px 50px rgba(61,43,71,.08);
-}
-
-.form-card{
-  width:min(980px,100%);
-  margin:0 auto;
-  padding:clamp(32px,4.5vw,56px);
-  background:#fff;
-  border:1px solid rgba(38,50,56,.09);
-  border-radius:24px;
-  box-shadow:var(--sp-shadow);
-}
-
-.form-section{
-  margin-top:44px;
-  padding-top:36px;
-  border-top:1px solid rgba(38,50,56,.10);
-}
-
-.form-section:first-of-type{
-  margin-top:0;
-  padding-top:0;
-  border-top:0;
-}
-
-.section-title{
-  margin:0 0 24px;
-  color:var(--sp-purple);
-  font-size:1.22rem;
-  line-height:1.2;
-  font-weight:800;
-  letter-spacing:-.015em;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:24px 34px;
-}
-
-.field{display:flex;flex-direction:column}
-.field.full{grid-column:1/-1}
-
-label{
-  margin:0 0 8px;
-  color:#16212a;
-  font-size:.95rem;
-  line-height:1.25;
-  font-weight:800;
-}
-
-.hint{
-  display:block;
-  margin-top:3px;
-  color:#8a9298;
-  font-size:.78rem;
-  font-weight:400;
-}
-
-input,select,textarea{
-  width:100%;
-  min-height:54px;
-  padding:14px 16px;
-  border:1px solid var(--sp-line);
-  border-radius:10px;
-  background:#fff;
-  color:#1f2930;
-  font:inherit;
-  font-size:.95rem;
-  outline:none;
-  transition:border-color .18s ease,box-shadow .18s ease;
-}
-
-textarea{
-  min-height:120px;
-  resize:vertical;
-}
-
-input::placeholder,
-textarea::placeholder{
-  color:#aeb6bc;
-  opacity:.48;
-}
-
-select{
-  color:#727b82;
-  appearance:none;
-  background-image:
-    linear-gradient(45deg,transparent 50%,#8a9298 50%),
-    linear-gradient(135deg,#8a9298 50%,transparent 50%);
-  background-position:calc(100% - 22px) 50%,calc(100% - 15px) 50%;
-  background-size:7px 7px,7px 7px;
-  background-repeat:no-repeat;
-}
-
-input:focus,select:focus,textarea:focus{
-  border-color:var(--sp-purple);
-  box-shadow:0 0 0 4px rgba(142,60,145,.10);
-}
-
-.offer-grid{
-  display:grid;
-  grid-template-columns:1.15fr 1fr .8fr;
-  gap:18px;
-  align-items:end;
-  padding:20px;
-  margin-bottom:18px;
-  border:1px solid rgba(38,50,56,.10);
-  border-radius:16px;
-  background:#fff;
-}
-
-.choice-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:10px;
-}
-
-.deliverable-choice-grid{
-  grid-template-columns:repeat(4,minmax(0,1fr));
-}
-
-.choice-pill{
-  min-height:46px;
-  padding:12px 14px;
-  border:1px solid var(--sp-line);
-  border-radius:999px;
-  display:flex;
-  align-items:center;
-  gap:9px;
-  color:#263238;
-  font-size:.9rem;
-  font-weight:700;
-  background:#fff;
-  cursor:pointer;
-}
-
-.choice-pill input{
-  width:auto;
-  min-height:auto;
-  accent-color:var(--sp-purple);
-}
-
-.upload-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:34px;
-  align-items:end;
-  margin-top:24px;
-}
-
-.file-box{
-  min-height:76px;
-  padding:16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:14px;
-  text-align:center;
-  border:1.5px dashed rgba(142,60,145,.42);
-  border-radius:12px;
-  background:#fcf8fd;
-  color:var(--sp-purple);
-  cursor:pointer;
-}
-
-.file-box input{display:none}
-.file-box strong{display:block;color:#263238;font-size:.92rem}
-.file-box span{display:block;margin-top:4px;color:#8a9298;font-size:.78rem}
-
-.disclaimer-upload{
-  display:inline-flex;
-  width:max-content;
-  align-items:center;
-  justify-content:center;
-  min-height:50px;
-  padding:13px 22px;
-  border-radius:999px;
-  background:var(--sp-purple);
-  color:#fff;
-  font-weight:800;
-  cursor:pointer;
-  margin-bottom:0;
-}
-
-.disclaimer-upload input{display:none}
-
-.micro-note{
-  margin:8px 0 0;
-  color:#8a9298;
-  font-size:.78rem;
-}
-
-.actions{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
-  margin-top:40px;
-}
-
-button{
-  min-height:56px;
-  padding:12px 16px;
-  border:1.5px solid var(--sp-purple);
-  border-radius:999px;
-  background:#fff;
-  color:var(--sp-purple);
-  font:inherit;
-  font-size:.9rem;
-  font-weight:800;
-  cursor:pointer;
-  transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
-}
-
-button:hover{
-  transform:translateY(-1px);
-  box-shadow:0 12px 24px rgba(61,43,71,.10);
-}
-
-button.primary{
-  border-color:transparent;
-  background:var(--sp-purple);
-  color:#fff;
-}
-
-.email-helper{
-  margin:14px 0 0;
-  color:#8a9298;
-  font-size:.78rem;
-  text-align:center;
-}
-
-.executive-brief{
-  display:none;
-  width:min(980px,100%);
-  margin:44px auto 0;
-}
-
-.executive-brief.is-visible{display:block}
-
-.brief-sheet{
-  background:#fff;
-  border:1px solid rgba(38,50,56,.10);
-  border-radius:22px;
-  box-shadow:0 22px 58px rgba(61,43,71,.12);
-  padding:44px;
-}
-
-.brief-sheet-header{
-  display:flex;
-  justify-content:space-between;
-  gap:28px;
-  align-items:flex-start;
-  padding-bottom:24px;
-  border-bottom:4px solid var(--sp-purple);
-}
-
-.brief-eyebrow{
-  margin:0 0 8px;
-  color:var(--sp-purple);
-  font-size:.78rem;
-  font-weight:900;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-}
-
-.brief-sheet-header h2{
-  margin:0;
-  color:#263238;
-  font-size:2.25rem;
-  line-height:1.04;
-  font-weight:900;
-  letter-spacing:-.045em;
-}
-
-.brief-meta{
-  margin:10px 0 0;
-  color:#667078;
-  font-size:.94rem;
-}
-
-.brief-logo{
-  width:170px;
-  height:auto;
-  object-fit:contain;
-}
-
-.brief-logo-wordmark{
-  color:#4c555c;
-  font-size:1.6rem;
-  font-weight:800;
-  letter-spacing:-.04em;
-  white-space:nowrap;
-}
-
-.brief-logo-wordmark .slash{
-  color:var(--sp-purple);
-  font-weight:900;
-}
-
-.brief-hero-row{
-  display:grid;
-  grid-template-columns:1.3fr 1fr;
-  gap:18px;
-  margin:26px 0;
-}
-
-.brief-callout{
-  padding:22px;
-  border-radius:18px;
-  background:var(--sp-purple);
-  color:#fff;
-}
-
-.brief-callout.secondary{
-  background:#f7eef9;
-  color:#263238;
-  border:1px solid rgba(142,60,145,.16);
-}
-
-.brief-callout span{
-  display:block;
-  margin-bottom:8px;
-  font-size:.75rem;
-  font-weight:900;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-  opacity:.85;
-}
-
-.brief-callout p{
-  margin:0;
-  font-size:1.12rem;
-  line-height:1.35;
-  font-weight:700;
-}
-
-.brief-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:18px;
-}
-
-.brief-panel{
-  min-height:146px;
-  padding:20px;
-  border-radius:16px;
-  border:1px solid rgba(38,50,56,.10);
-  background:#fff;
-}
-
-.brief-panel.accent{
-  background:#fbf7fc;
-  border-color:rgba(142,60,145,.18);
-}
-
-.brief-panel h3{
-  margin:0 0 10px;
-  color:var(--sp-purple);
-  font-size:.9rem;
-  line-height:1.2;
-  font-weight:900;
-  letter-spacing:.02em;
-  text-transform:uppercase;
-}
-
-.brief-panel p,.brief-panel li{
-  margin:0;
-  color:#34424a;
-  font-size:.92rem;
-  line-height:1.55;
-}
-
-.brief-panel ul{
-  margin:0;
-  padding-left:18px;
-}
-
-.brief-sheet-footer{
-  display:grid;
-  grid-template-columns:1.4fr .6fr;
-  gap:18px;
-  margin-top:18px;
-  padding-top:20px;
-  border-top:1px solid rgba(38,50,56,.12);
-}
-
-.brief-sheet-footer strong{
-  display:block;
-  margin-bottom:6px;
-  color:var(--sp-purple);
-  font-size:.8rem;
-  font-weight:900;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-}
-
-.brief-sheet-footer p{
-  margin:0;
-  color:#34424a;
-  font-size:.9rem;
-  line-height:1.5;
-}
-
-.footer{
-  width:min(980px,100%);
-  margin:26px auto 0;
-  text-align:center;
-  color:#7f878d;
-  font-size:.68rem;
-  line-height:1.45;
-}
-
-.footer p{margin:3px 0}
-.footer .tool-tag{margin-top:8px;font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:#8d9296}
-
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:20px;
-  transform:translateX(-50%) translateY(12px);
-  padding:13px 18px;
-  border-radius:999px;
-  background:#263238;
-  color:#fff;
-  box-shadow:0 14px 34px rgba(0,0,0,.20);
-  opacity:0;
-  pointer-events:none;
-  transition:.2s ease;
-  z-index:20;
-}
-
-.toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-}
-
-@media(max-width:1100px){
-  .actions{grid-template-columns:repeat(2,1fr)}
-}
-
-@media(max-width:900px){
-  .page{padding:16px 14px 34px}
-  .hero-lockup-html{flex-direction:column;text-align:center;gap:18px;padding:30px 18px;min-height:auto}
-  
-  .site-header{min-height:64px;padding-bottom:22px}
-  .sparklight-logo{width:min(220px,58vw)}
-  .hero{padding:20px 0 30px}
-  .hero-lockup-img{width:min(720px,96%)}
-  .form-card{padding:28px 20px 32px;border-radius:22px}
-  .grid,.offer-grid,.upload-row,.actions,.brief-hero-row,.brief-grid,.brief-sheet-footer{grid-template-columns:1fr}
-  .choice-grid,.deliverable-choice-grid{grid-template-columns:1fr}
-  .form-section{margin-top:34px;padding-top:28px}
-  .section-title{margin-bottom:18px;font-size:1.08rem}
-  .brief-sheet{padding:28px 20px}
-  .brief-sheet-header{display:grid}
-  .brief-logo{width:140px}
-  .brief-sheet-header h2{font-size:1.9rem}
-}
-
-@media(max-width:480px){
-  .page{padding-left:10px;padding-right:10px}
-  .hero{padding:16px 0 22px}
-  .form-card{padding:24px 16px 28px;border-radius:18px}
-  input,select,textarea{min-height:52px;padding:13px 14px;font-size:.92rem}
-  label{font-size:.9rem}
-}
-
-@media print{
-  body{background:#fff}
-  .site-header,.hero,.form-card,.footer,.toast,.email-helper{display:none!important}
-  .page{width:100%;max-width:none;padding:0;margin:0}
-  .executive-brief{display:block!important;width:100%;margin:0}
-  .brief-sheet{box-shadow:none;border:0;border-radius:0;padding:.45in}
-  .brief-sheet-header h2{font-size:28pt}
-  .brief-callout p{font-size:12pt}
-  .brief-panel{break-inside:avoid;min-height:auto}
-  @page{size:letter;margin:.35in}
-}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -826,15 +260,15 @@ button.primary{
       </section>
 
       <div class="actions">
-       <button type="button" class="primary" onclick="generateExecutiveBrief()">Preview One-Sheet</button>
-        <button type="button" onclick="submitToMonday()">Submit to Monday</button>
-        <button type="button" onclick="printExecutiveBrief()">Print Sheet</button>
-       <button type="button" onclick="emailBrief()">Email Brief</button>
-        <button type="button" onclick="printSummary()">Print Summary</button>
-        <button type="button" onclick="downloadCsv()">Download CSV</button>
+        <button type="button" class="primary" onclick="submitBrief()">Submit Brief</button>
         <button type="button" onclick="fillDemoData()">Demo Fill</button>
- 
-      
+        <button type="button" onclick="downloadCsv()">Download CSV</button>
+        <button type="button" onclick="copyBrief()">Copy Brief</button>
+        <button type="button" onclick="generateExecutiveBrief()">Preview One-Sheet</button>
+        <button type="button" onclick="printExecutiveBrief()">Print Sheet</button>
+        <button type="button" onclick="printSummary()">Print Summary</button>
+        <button type="button" onclick="submitToMonday()">Submit to Monday</button>
+        <button type="button" onclick="emailBrief()">Email Brief</button>
       </div>
       <p class="email-helper">Email Brief opens a preformatted email body. Use Print Sheet separately when a designed PDF is needed.</p>
     </form>
@@ -884,7 +318,7 @@ button.primary{
 <div id="toast" class="toast">Ready.</div>
 
 <script>
-const MONDAY_API_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjY1NjAyNDg0OCwiYWFpIjoxMSwidWlkIjozMzI3MTkwOCwiaWFkIjoiMjAyNi0wNS0wOFQyMDo0MDo0Mi4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6OTc4MzI3MSwicmduIjoidXNlMSJ9.I9yOuHDYuQVxajlGjFYVTKdzDB-eEhK-qNtzrJYHBV0";
+const MONDAY_API_TOKEN = "PASTE_YOUR_MONDAY_API_TOKEN_HERE";
 const MONDAY_BOARD_ID = 18412398738;
 const hiddenRecipient = "Farrellt@sparklight.biz";
 
@@ -1030,72 +464,237 @@ function copyBrief(){
   navigator.clipboard.writeText(getBriefText()).then(() => showToast("Brief copied."));
 }
 
-function addEmailSection(lines, title, value){
-  const cleanValue = String(value || "").trim();
-  if(!cleanValue) return;
+function emailBrief() {
 
-  lines.push("");
-  lines.push(title);
-  lines.push("-".repeat(title.length));
-  lines.push(cleanValue);
+  const form = getFormData();
+
+  const subject = encodeURIComponent(
+
+    `Creative Brief – ${form.projectName || 'Untitled Project'}`
+
+  );
+
+  const emailBody = `
+
+YE OLE CREATIVE BRIEF COMPILER
+
+======================================
+
+PROJECT NAME
+
+${form.projectName || ''}
+
+CAMPAIGN NAME
+
+${form.campaignTimeline || ''}
+
+LAUNCH DATE
+
+${form.launchDate || ''}
+
+CREATIVE DUE BY
+
+${form.dueBy || ''}
+
+REQUESTOR EMAIL
+
+${form.requestorEmail || ''}
+
+PRIMARY OBJECTIVE
+
+${form.primaryObjective || ''}
+
+BACKGROUND
+
+${form.background || ''}
+
+SINGLE-MINDED PROPOSITION
+
+${form.smp || ''}
+
+TARGET AUDIENCE
+
+${form.targetAudience || ''}
+
+TARGET AUDIENCE DETAILS
+
+${form.targetAudienceDetails || ''}
+
+INSIGHT
+
+${form.insight || ''}
+
+BEHAVIOR SHIFT
+
+${form.behaviorObjective || ''}
+
+ENEMY / TENSION
+
+${form.enemy || ''}
+
+EMOTIONAL HOOK & TONE
+
+${form.emotionalTone || ''}
+
+KEY MESSAGING
+
+${form.keyMessaging || ''}
+
+--------------------------------------
+
+OFFERS
+
+--------------------------------------
+
+OFFER 1
+
+Offer:
+
+${form.offer1 || ''}
+
+Secondary Push:
+
+${form.push1 || ''}
+
+CTA:
+
+${form.cta1 || ''}
+
+OFFER 2
+
+Offer:
+
+${form.offer2 || ''}
+
+Secondary Push:
+
+${form.push2 || ''}
+
+CTA:
+
+${form.cta2 || ''}
+
+OFFER 3
+
+Offer:
+
+${form.offer3 || ''}
+
+Secondary Push:
+
+${form.push3 || ''}
+
+CTA:
+
+${form.cta3 || ''}
+
+--------------------------------------
+
+CREATIVE AGENCY
+
+${form.creativeAgency || ''}
+
+DESIRED DELIVERABLES
+
+${form.deliverables || ''}
+
+DELIVERABLE DETAILS
+
+${form.deliverableDetails || ''}
+
+MANDATORIES / LEGALS
+
+${form.mandatories || ''}
+
+ADDITIONAL NOTES
+
+${form.additionalNotes || ''}
+
+MARKET / REGION
+
+${form.market || ''}
+
+======================================
+
+© 2026 Sparklight® — A Problematic Tool.
+
+`;
+
+  const mailtoLink =
+
+    `mailto:?subject=${subject}&body=${encodeURIComponent(emailBody)}`;
+
+  window.location.href = mailtoLink;
+
 }
-
-function emailBrief(){
-  if(!validateBrief()) return;
 
   const projectName = val("projectName", "New Project");
   const subject = encodeURIComponent("Creative Brief Submission: " + projectName);
+  const body = encodeURIComponent(
+`YE OLE CREATIVE BRIEF COMPILER
 
-  const lines = [];
+PROJECT
+${projectName}
 
-  lines.push("YE OLE CREATIVE BRIEF COMPILER");
-  lines.push("======================================");
+Requestor: ${val("requestorEmail","")}
+Campaign Name: ${val("timeline")}
+Launch Date: ${formatDate(val("launchDate", "")) || "Not provided"}
+Creative Due By: ${formatDate(val("dueBy", "")) || "Not provided"}
+Market / Region: ${val("market")}
+Strategy Lead: ${val("strategyLead")}
+Creative Agency: ${agencyValue() || "Not provided"}
 
-  addEmailSection(lines, "PROJECT NAME", projectName);
-  addEmailSection(lines, "CAMPAIGN NAME", val("timeline", ""));
-  addEmailSection(lines, "LAUNCH DATE", formatDate(val("launchDate", "")) || "Not provided");
-  addEmailSection(lines, "CREATIVE DUE BY", formatDate(val("dueBy", "")) || "Not provided");
-  addEmailSection(lines, "REQUESTOR EMAIL", val("requestorEmail", ""));
-  addEmailSection(lines, "MARKET / REGION", val("market", ""));
-  addEmailSection(lines, "STRATEGY LEAD", val("strategyLead", ""));
-  addEmailSection(lines, "CREATIVE AGENCY", agencyValue() || "Not provided");
+OBJECTIVE
+${val("objective")}
 
-  addEmailSection(lines, "PRIMARY OBJECTIVE", val("objective", ""));
-  addEmailSection(lines, "BACKGROUND", val("background", ""));
-  addEmailSection(lines, "SINGLE-MINDED PROPOSITION / CORE IDEA", val("smp", ""));
+THE BIG IDEA
+${val("smp")}
 
-  addEmailSection(
-    lines,
-    "AUDIENCE",
-    `${val("targetAudienceType", "")}\n${val("targetAudience", "")}`.trim()
+BACKGROUND
+${val("background")}
+
+AUDIENCE
+${val("targetAudienceType")}
+${val("targetAudience")}
+
+INSIGHT
+${val("insight")}
+
+BEHAVIOR SHIFT
+${val("behavior")}
+
+ENEMY / TENSION
+${val("enemy")}
+
+EMOTIONAL HOOK & TONE
+${val("tone")}
+
+KEY MESSAGING
+${val("keyMessaging")}
+
+OFFERS
+1. ${val("offer1","")} | ${val("secondary1","")} | ${val("cta1","")}
+2. ${val("offer2","")} | ${val("secondary2","")} | ${val("cta2","")}
+3. ${val("offer3","")} | ${val("secondary3","")} | ${val("cta3","")}
+
+DELIVERABLES
+${deliverableValue() || "Not provided"}
+
+DELIVERABLE DETAILS
+${val("deliverables")}
+
+MANDATORIES / LEGALS
+${val("mandatories")}
+
+ADDITIONAL NOTES
+${val("additionalNotes")}
+
+—
+© 2026 Sparklight®
+A Problematic Tool.`
   );
 
-  addEmailSection(lines, "INSIGHT", val("insight", ""));
-  addEmailSection(lines, "BEHAVIOR SHIFT", val("behavior", ""));
-  addEmailSection(lines, "ENEMY / TENSION", val("enemy", ""));
-  addEmailSection(lines, "EMOTIONAL HOOK & TONE", val("tone", ""));
-  addEmailSection(lines, "KEY MESSAGING", val("keyMessaging", ""));
-
-  const offerText = [
-    `1. Offer: ${val("offer1", "")}\n   Secondary Push: ${val("secondary1", "")}\n   CTA: ${val("cta1", "")}`,
-    `2. Offer: ${val("offer2", "")}\n   Secondary Push: ${val("secondary2", "")}\n   CTA: ${val("cta2", "")}`,
-    `3. Offer: ${val("offer3", "")}\n   Secondary Push: ${val("secondary3", "")}\n   CTA: ${val("cta3", "")}`
-  ].join("\n\n");
-
-  addEmailSection(lines, "OFFERS", offerText);
-  addEmailSection(lines, "DESIRED DELIVERABLES", deliverableValue() || "Not provided");
-  addEmailSection(lines, "DELIVERABLE DETAILS", val("deliverables", ""));
-  addEmailSection(lines, "MANDATORIES / LEGALS", val("mandatories", ""));
-  addEmailSection(lines, "ADDITIONAL NOTES", val("additionalNotes", ""));
-
-  lines.push("");
-  lines.push("======================================");
-  lines.push("© 2026 Sparklight® — A Problematic Tool.");
-
-  const emailBody = lines.join("\r\n");
-
-  window.location.href =
-    `mailto:${hiddenRecipient}?subject=${subject}&body=${encodeURIComponent(emailBody)}`;
+  window.location.href = `mailto:${hiddenRecipient}?subject=${subject}&body=${body}`;
 }
 
 function submitBrief(){
