@@ -280,6 +280,7 @@
 
       <div class="actions">
         <button type="button" class="primary" onclick="submitBrief()">Submit Brief</button>
+        <button type="button" onclick="fillDemoData()">Demo Fill</button>
         <button type="button" onclick="downloadBrief()">Download TXT</button>
         <button type="button" onclick="copyBrief()">Copy Brief</button>
         <button type="button" onclick="emailBrief()">Email Brief</button>
@@ -374,5 +375,112 @@ function submitBrief(){
   emailBrief();
 }
 </script>
+
+<script>
+function fillDemoData(){
+
+  document.getElementById("projectName").value =
+    "Q3 Fiber Expansion Awareness Campaign";
+
+  document.getElementById("firstName").value =
+    "Taylor";
+
+  document.getElementById("lastName").value =
+    "Farrell";
+
+  document.getElementById("timeline").value =
+    "Q3 2026 Fiber Expansion";
+
+  document.getElementById("strategyLead").value =
+    "Creative Strategy Team";
+
+  document.getElementById("agency").value =
+    "Internal Creative Services";
+
+  document.getElementById("background").value =
+    "New fiber expansion markets require awareness and consideration creative that positions Sparklight as the premium local provider.";
+
+  document.getElementById("smp").value =
+    "Fiber internet should feel reliable, simple, and built for modern households.";
+
+  document.getElementById("insight").value =
+    "Consumers are frustrated with inconsistent providers and unclear pricing.";
+
+  document.getElementById("behavior").value =
+    "Move customers from passive dissatisfaction to actively switching providers.";
+
+  document.getElementById("audienceInsight").value =
+    "Families and remote workers want internet they never have to think about.";
+
+  document.getElementById("enemy").value =
+    "Buffering, outages, pricing confusion, and unreliable competitors.";
+
+  document.getElementById("tone").value =
+    "Confident, modern, premium, trustworthy, slightly playful.";
+
+  document.getElementById("targetAudienceType").value =
+    "Fiber expansion area";
+
+  document.getElementById("objective").value =
+    "Awareness";
+
+  document.getElementById("targetAudience").value =
+    "Residential households in newly expanded fiber markets with high streaming and gaming usage.";
+
+  document.getElementById("keyMessaging").value =
+    "Fueled by the speed and reliability of fiber. Local support. Transparent pricing.";
+
+  document.getElementById("offer1").value =
+    "1 Gig Fiber Internet for $65/mo";
+
+  document.getElementById("secondary1").value =
+    "$200 Gift Card";
+
+  document.getElementById("cta1").value =
+    "Check Availability";
+
+  document.getElementById("offer2").value =
+    "Free Installation";
+
+  document.getElementById("secondary2").value =
+    "Free Modem";
+
+  document.getElementById("cta2").value =
+    "Shop Plans";
+
+  document.getElementById("offer3").value =
+    "Multi-Gig Fiber";
+
+  document.getElementById("secondary3").value =
+    "Whole Home WiFi";
+
+  document.getElementById("cta3").value =
+    "Get Started";
+
+  document.getElementById("budget").value =
+    "$15K–$50K";
+
+  document.getElementById("deliverableType").value =
+    "Full campaign mix";
+
+  document.getElementById("campaignRound").value =
+    "SPK_Q326_FiberExpansion";
+
+  document.getElementById("deliverables").value =
+    "Meta ads, HTML5 display, landing page hero refresh, email campaign, :15 video.";
+
+  document.getElementById("mandatories").value =
+    "Use current Sparklight fiber positioning, approved legal disclaimers, and Q3 rate card pricing.";
+
+  document.getElementById("additionalNotes").value =
+    "Creative should feel premium, modern, and cleaner than local competitors.";
+
+  document.getElementById("market").value =
+    "Boise";
+
+  showToast("Demo brief loaded.");
+}
+</script>
+
 </body>
 </html>
