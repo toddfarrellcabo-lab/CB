@@ -80,12 +80,6 @@ body{
 }
 
 .hero-lockup-img{
-  width:min(960px,92%);
-  height:auto;
-  display:block;
-}
-
-.hero-lockup-img{
   width:min(1080px,100%);
   height:auto;
   display:block;
@@ -1030,237 +1024,106 @@ function copyBrief(){
   navigator.clipboard.writeText(getBriefText()).then(() => showToast("Brief copied."));
 }
 
-function emailBrief() {
+function emailBrief(){
+  if(!validateBrief()) return;
 
-  const form = getFormData();
-
-  const subject = encodeURIComponent(
-
-    `Creative Brief – ${form.projectName || 'Untitled Project'}`
-
-  );
+  const projectName = val("projectName", "New Project");
+  const subject = encodeURIComponent("Creative Brief Submission: " + projectName);
 
   const emailBody = `
-
 YE OLE CREATIVE BRIEF COMPILER
-
 ======================================
 
 PROJECT NAME
-
-${form.projectName || ''}
+${projectName}
 
 CAMPAIGN NAME
-
-${form.campaignTimeline || ''}
+${val("timeline", "")}
 
 LAUNCH DATE
-
-${form.launchDate || ''}
+${formatDate(val("launchDate", "")) || "Not provided"}
 
 CREATIVE DUE BY
-
-${form.dueBy || ''}
+${formatDate(val("dueBy", "")) || "Not provided"}
 
 REQUESTOR EMAIL
-
-${form.requestorEmail || ''}
+${val("requestorEmail", "")}
 
 PRIMARY OBJECTIVE
-
-${form.primaryObjective || ''}
+${val("objective", "")}
 
 BACKGROUND
+${val("background", "")}
 
-${form.background || ''}
-
-SINGLE-MINDED PROPOSITION
-
-${form.smp || ''}
+SINGLE-MINDED PROPOSITION / CORE IDEA
+${val("smp", "")}
 
 TARGET AUDIENCE
-
-${form.targetAudience || ''}
+${val("targetAudienceType", "")}
 
 TARGET AUDIENCE DETAILS
-
-${form.targetAudienceDetails || ''}
+${val("targetAudience", "")}
 
 INSIGHT
-
-${form.insight || ''}
+${val("insight", "")}
 
 BEHAVIOR SHIFT
-
-${form.behaviorObjective || ''}
+${val("behavior", "")}
 
 ENEMY / TENSION
-
-${form.enemy || ''}
+${val("enemy", "")}
 
 EMOTIONAL HOOK & TONE
-
-${form.emotionalTone || ''}
+${val("tone", "")}
 
 KEY MESSAGING
-
-${form.keyMessaging || ''}
+${val("keyMessaging", "")}
 
 --------------------------------------
-
 OFFERS
-
 --------------------------------------
 
 OFFER 1
-
-Offer:
-
-${form.offer1 || ''}
-
-Secondary Push:
-
-${form.push1 || ''}
-
-CTA:
-
-${form.cta1 || ''}
+Offer: ${val("offer1", "")}
+Secondary Push: ${val("secondary1", "")}
+CTA: ${val("cta1", "")}
 
 OFFER 2
-
-Offer:
-
-${form.offer2 || ''}
-
-Secondary Push:
-
-${form.push2 || ''}
-
-CTA:
-
-${form.cta2 || ''}
+Offer: ${val("offer2", "")}
+Secondary Push: ${val("secondary2", "")}
+CTA: ${val("cta2", "")}
 
 OFFER 3
-
-Offer:
-
-${form.offer3 || ''}
-
-Secondary Push:
-
-${form.push3 || ''}
-
-CTA:
-
-${form.cta3 || ''}
+Offer: ${val("offer3", "")}
+Secondary Push: ${val("secondary3", "")}
+CTA: ${val("cta3", "")}
 
 --------------------------------------
 
 CREATIVE AGENCY
-
-${form.creativeAgency || ''}
+${agencyValue() || "Not provided"}
 
 DESIRED DELIVERABLES
-
-${form.deliverables || ''}
-
-DELIVERABLE DETAILS
-
-${form.deliverableDetails || ''}
-
-MANDATORIES / LEGALS
-
-${form.mandatories || ''}
-
-ADDITIONAL NOTES
-
-${form.additionalNotes || ''}
-
-MARKET / REGION
-
-${form.market || ''}
-
-======================================
-
-© 2026 Sparklight® — A Problematic Tool.
-
-`;
-
-  const mailtoLink =
-
-    `mailto:?subject=${subject}&body=${encodeURIComponent(emailBody)}`;
-
-  window.location.href = mailtoLink;
-
-}
-
-  const projectName = val("projectName", "New Project");
-  const subject = encodeURIComponent("Creative Brief Submission: " + projectName);
-  const body = encodeURIComponent(
-`YE OLE CREATIVE BRIEF COMPILER
-
-PROJECT
-${projectName}
-
-Requestor: ${val("requestorEmail","")}
-Campaign Name: ${val("timeline")}
-Launch Date: ${formatDate(val("launchDate", "")) || "Not provided"}
-Creative Due By: ${formatDate(val("dueBy", "")) || "Not provided"}
-Market / Region: ${val("market")}
-Strategy Lead: ${val("strategyLead")}
-Creative Agency: ${agencyValue() || "Not provided"}
-
-OBJECTIVE
-${val("objective")}
-
-THE BIG IDEA
-${val("smp")}
-
-BACKGROUND
-${val("background")}
-
-AUDIENCE
-${val("targetAudienceType")}
-${val("targetAudience")}
-
-INSIGHT
-${val("insight")}
-
-BEHAVIOR SHIFT
-${val("behavior")}
-
-ENEMY / TENSION
-${val("enemy")}
-
-EMOTIONAL HOOK & TONE
-${val("tone")}
-
-KEY MESSAGING
-${val("keyMessaging")}
-
-OFFERS
-1. ${val("offer1","")} | ${val("secondary1","")} | ${val("cta1","")}
-2. ${val("offer2","")} | ${val("secondary2","")} | ${val("cta2","")}
-3. ${val("offer3","")} | ${val("secondary3","")} | ${val("cta3","")}
-
-DELIVERABLES
 ${deliverableValue() || "Not provided"}
 
 DELIVERABLE DETAILS
-${val("deliverables")}
+${val("deliverables", "")}
 
 MANDATORIES / LEGALS
-${val("mandatories")}
+${val("mandatories", "")}
 
 ADDITIONAL NOTES
-${val("additionalNotes")}
+${val("additionalNotes", "")}
 
-—
-© 2026 Sparklight®
-A Problematic Tool.`
-  );
+MARKET / REGION
+${val("market", "")}
 
-  window.location.href = `mailto:${hiddenRecipient}?subject=${subject}&body=${body}`;
+======================================
+© 2026 Sparklight® — A Problematic Tool.
+`;
+
+  window.location.href =
+    `mailto:${hiddenRecipient}?subject=${subject}&body=${encodeURIComponent(emailBody)}`;
 }
 
 function submitBrief(){
