@@ -421,3 +421,21 @@ button.primary{
     grid-template-columns:1fr;
   }
 }
+
+
+.email-helper{
+  margin:14px 0 0;
+  color:#8a9298;
+  font-size:.78rem;
+  text-align:center;
+}
+
+.actions{
+  grid-template-columns:repeat(5,1fr);
+}
+
+@media(max-width:900px){
+  .actions{
+    grid-template-columns:1fr;
+  }
+}

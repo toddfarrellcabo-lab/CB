@@ -281,10 +281,11 @@
       <div class="actions">
         <button type="button" class="primary" onclick="submitBrief()">Submit Brief</button>
         <button type="button" onclick="fillDemoData()">Demo Fill</button>
-        <button type="button" onclick="downloadBrief()">Download TXT</button>
+        <button type="button" onclick="downloadBrief()">Download CSV</button>
         <button type="button" onclick="copyBrief()">Copy Brief</button>
         <button type="button" onclick="emailBrief()">Email Brief</button>
       </div>
+      <p class="email-helper">Email submit will download a clean CSV first. Attach that file to the email before sending.</p>
     </form>
   </main>
 
@@ -301,33 +302,103 @@
 <script>
 const hiddenRecipient = "Farrellt@sparklight.biz";
 
+const fieldLabels = [
+  ["Project Name", "projectName"],
+  ["Requestor First Name", "firstName"],
+  ["Requestor Last Name", "lastName"],
+  ["Campaign Timeline", "timeline"],
+  ["Due / Launch Date", "launchDate"],
+  ["Strategy Lead", "strategyLead"],
+  ["Creative Agency", "agency"],
+  ["Background", "background"],
+  ["Single-Minded Proposition", "smp"],
+  ["Insight", "insight"],
+  ["Behavioral Objective", "behavior"],
+  ["Audience Insight", "audienceInsight"],
+  ["Enemy", "enemy"],
+  ["Emotional Hook and Tone", "tone"],
+  ["Target Audience Type", "targetAudienceType"],
+  ["Primary Objective", "objective"],
+  ["Target Audience Details", "targetAudience"],
+  ["Key Messaging", "keyMessaging"],
+  ["Primary Offer Version 1", "offer1"],
+  ["Secondary Push 1", "secondary1"],
+  ["Primary CTA 1", "cta1"],
+  ["Primary Offer Version 2", "offer2"],
+  ["Secondary Push 2", "secondary2"],
+  ["Primary CTA 2", "cta2"],
+  ["Primary Offer Version 3", "offer3"],
+  ["Secondary Push 3", "secondary3"],
+  ["Primary CTA 3", "cta3"],
+  ["Budget", "budget"],
+  ["Desired Deliverables Type", "deliverableType"],
+  ["Campaign Round / Flight", "campaignRound"],
+  ["Deliverables Detail", "deliverables"],
+  ["Mandatories", "mandatories"],
+  ["Additional Notes / Details", "additionalNotes"],
+  ["Market / Region", "market"]
+];
+
+function getValueById(id){
+  const el = document.getElementById(id);
+  if(!el) return "";
+  return el.value || "";
+}
+
+function formatDate(value){
+  if(!value) return "";
+  const parts = value.split("-");
+  if(parts.length !== 3) return value;
+  return `${parts[1]}/${parts[2]}/${parts[0]}`;
+}
+
+function escapeCsv(value){
+  const clean = String(value ?? "").replace(/?
+/g, " ").trim();
+  return `"${clean.replace(/"/g, '""')}"`;
+}
+
+function getBriefRows(){
+  return fieldLabels.map(([label, id]) => {
+    let value = getValueById(id);
+    if(id === "launchDate") value = formatDate(value);
+    return [label, value || "Not provided"];
+  });
+}
+
 function getBriefText(){
-  const form = document.getElementById("briefForm");
-  const data = new FormData(form);
+  const rows = getBriefRows();
+  let output = "YE OLE CREATIVE BRIEF COMPILER
+";
+  output += "================================
 
-  let output = "YE OLE CREATIVE BRIEF COMPILER\\n";
-  output += "==========================\\n\\n";
+";
 
-  for (const [key, value] of data.entries()){
-    if (key === "Supporting Files") continue;
-    output += key.toUpperCase() + ":\\n";
-    output += (value || "[Not provided]") + "\\n\\n";
-  }
+  rows.forEach(([label, value]) => {
+    output += `${label}:
+${value}
 
-  const files = document.getElementById("supportingFiles").files;
-  if (files.length){
-    output += "SUPPORTING FILES:\\n";
-    Array.from(files).forEach(file => output += "- " + file.name + "\\n");
-    output += "\\n";
-  }
+`;
+  });
 
   output += "© 2026 Sparklight®";
   return output;
 }
 
+function getBriefCsv(){
+  const rows = getBriefRows();
+  let csv = "Section,Response
+";
+  rows.forEach(([label, value]) => {
+    csv += `${escapeCsv(label)},${escapeCsv(value)}
+`;
+  });
+  return csv;
+}
+
 function validateBrief(){
   const form = document.getElementById("briefForm");
-  if (!form.checkValidity()){
+  if(!form.checkValidity()){
     form.reportValidity();
     return false;
   }
@@ -341,33 +412,48 @@ function showToast(message){
   setTimeout(() => toast.classList.remove("show"), 2200);
 }
 
-function downloadBrief(){
-  if (!validateBrief()) return;
+function downloadCsv(){
+  if(!validateBrief()) return;
 
-  const blob = new Blob([getBriefText()], {type:"text/plain;charset=utf-8"});
+  const blob = new Blob([getBriefCsv()], {type:"text/csv;charset=utf-8"});
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = "ye_ole_creative_brief.txt";
+  link.download = "sparklight_creative_brief.csv";
   document.body.appendChild(link);
   link.click();
   link.remove();
   URL.revokeObjectURL(link.href);
 
-  showToast("Brief downloaded.");
+  showToast("CSV brief downloaded.");
+}
+
+function downloadBrief(){
+  downloadCsv();
 }
 
 async function copyBrief(){
-  if (!validateBrief()) return;
+  if(!validateBrief()) return;
 
   await navigator.clipboard.writeText(getBriefText());
   showToast("Brief copied.");
 }
 
 function emailBrief(){
-  if (!validateBrief()) return;
+  if(!validateBrief()) return;
+
+  // Browsers cannot reliably attach a generated file through mailto.
+  // This downloads a clean CSV attachment first, then opens an email with instructions.
+  downloadCsv();
 
   const subject = encodeURIComponent("Creative Brief Submission");
-  const body = encodeURIComponent(getBriefText());
+  const body = encodeURIComponent(
+    "Creative brief CSV generated.
+
+Please attach the downloaded file named sparklight_creative_brief.csv to this email before sending.
+
+Thank you."
+  );
+
   window.location.href = `mailto:${hiddenRecipient}?subject=${subject}&body=${body}`;
 }
 
