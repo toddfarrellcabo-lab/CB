@@ -80,6 +80,12 @@ body{
 }
 
 .hero-lockup-img{
+  width:min(960px,92%);
+  height:auto;
+  display:block;
+}
+
+.hero-lockup-img{
   width:min(1080px,100%);
   height:auto;
   display:block;
@@ -1024,103 +1030,69 @@ function copyBrief(){
   navigator.clipboard.writeText(getBriefText()).then(() => showToast("Brief copied."));
 }
 
+function addEmailSection(lines, title, value){
+  const cleanValue = String(value || "").trim();
+  if(!cleanValue) return;
+
+  lines.push("");
+  lines.push(title);
+  lines.push("-".repeat(title.length));
+  lines.push(cleanValue);
+}
+
 function emailBrief(){
   if(!validateBrief()) return;
 
   const projectName = val("projectName", "New Project");
   const subject = encodeURIComponent("Creative Brief Submission: " + projectName);
 
-  const emailBody = `
-YE OLE CREATIVE BRIEF COMPILER
-======================================
+  const lines = [];
 
-PROJECT NAME
-${projectName}
+  lines.push("YE OLE CREATIVE BRIEF COMPILER");
+  lines.push("======================================");
 
-CAMPAIGN NAME
-${val("timeline", "")}
+  addEmailSection(lines, "PROJECT NAME", projectName);
+  addEmailSection(lines, "CAMPAIGN NAME", val("timeline", ""));
+  addEmailSection(lines, "LAUNCH DATE", formatDate(val("launchDate", "")) || "Not provided");
+  addEmailSection(lines, "CREATIVE DUE BY", formatDate(val("dueBy", "")) || "Not provided");
+  addEmailSection(lines, "REQUESTOR EMAIL", val("requestorEmail", ""));
+  addEmailSection(lines, "MARKET / REGION", val("market", ""));
+  addEmailSection(lines, "STRATEGY LEAD", val("strategyLead", ""));
+  addEmailSection(lines, "CREATIVE AGENCY", agencyValue() || "Not provided");
 
-LAUNCH DATE
-${formatDate(val("launchDate", "")) || "Not provided"}
+  addEmailSection(lines, "PRIMARY OBJECTIVE", val("objective", ""));
+  addEmailSection(lines, "BACKGROUND", val("background", ""));
+  addEmailSection(lines, "SINGLE-MINDED PROPOSITION / CORE IDEA", val("smp", ""));
 
-CREATIVE DUE BY
-${formatDate(val("dueBy", "")) || "Not provided"}
+  addEmailSection(
+    lines,
+    "AUDIENCE",
+    `${val("targetAudienceType", "")}\n${val("targetAudience", "")}`.trim()
+  );
 
-REQUESTOR EMAIL
-${val("requestorEmail", "")}
+  addEmailSection(lines, "INSIGHT", val("insight", ""));
+  addEmailSection(lines, "BEHAVIOR SHIFT", val("behavior", ""));
+  addEmailSection(lines, "ENEMY / TENSION", val("enemy", ""));
+  addEmailSection(lines, "EMOTIONAL HOOK & TONE", val("tone", ""));
+  addEmailSection(lines, "KEY MESSAGING", val("keyMessaging", ""));
 
-PRIMARY OBJECTIVE
-${val("objective", "")}
+  const offerText = [
+    `1. Offer: ${val("offer1", "")}\n   Secondary Push: ${val("secondary1", "")}\n   CTA: ${val("cta1", "")}`,
+    `2. Offer: ${val("offer2", "")}\n   Secondary Push: ${val("secondary2", "")}\n   CTA: ${val("cta2", "")}`,
+    `3. Offer: ${val("offer3", "")}\n   Secondary Push: ${val("secondary3", "")}\n   CTA: ${val("cta3", "")}`
+  ].join("\n\n");
 
-BACKGROUND
-${val("background", "")}
+  addEmailSection(lines, "OFFERS", offerText);
+  addEmailSection(lines, "DESIRED DELIVERABLES", deliverableValue() || "Not provided");
+  addEmailSection(lines, "DELIVERABLE DETAILS", val("deliverables", ""));
+  addEmailSection(lines, "MANDATORIES / LEGALS", val("mandatories", ""));
+  addEmailSection(lines, "ADDITIONAL NOTES", val("additionalNotes", ""));
 
-SINGLE-MINDED PROPOSITION / CORE IDEA
-${val("smp", "")}
+  lines.push("");
+  lines.push("======================================");
+  lines.push("© 2026 Sparklight® — A Problematic Tool.");
 
-TARGET AUDIENCE
-${val("targetAudienceType", "")}
-
-TARGET AUDIENCE DETAILS
-${val("targetAudience", "")}
-
-INSIGHT
-${val("insight", "")}
-
-BEHAVIOR SHIFT
-${val("behavior", "")}
-
-ENEMY / TENSION
-${val("enemy", "")}
-
-EMOTIONAL HOOK & TONE
-${val("tone", "")}
-
-KEY MESSAGING
-${val("keyMessaging", "")}
-
---------------------------------------
-OFFERS
---------------------------------------
-
-OFFER 1
-Offer: ${val("offer1", "")}
-Secondary Push: ${val("secondary1", "")}
-CTA: ${val("cta1", "")}
-
-OFFER 2
-Offer: ${val("offer2", "")}
-Secondary Push: ${val("secondary2", "")}
-CTA: ${val("cta2", "")}
-
-OFFER 3
-Offer: ${val("offer3", "")}
-Secondary Push: ${val("secondary3", "")}
-CTA: ${val("cta3", "")}
-
---------------------------------------
-
-CREATIVE AGENCY
-${agencyValue() || "Not provided"}
-
-DESIRED DELIVERABLES
-${deliverableValue() || "Not provided"}
-
-DELIVERABLE DETAILS
-${val("deliverables", "")}
-
-MANDATORIES / LEGALS
-${val("mandatories", "")}
-
-ADDITIONAL NOTES
-${val("additionalNotes", "")}
-
-MARKET / REGION
-${val("market", "")}
-
-======================================
-© 2026 Sparklight® — A Problematic Tool.
-`;
+  const emailBody = lines.join("\r\n");
 
   window.location.href =
     `mailto:${hiddenRecipient}?subject=${subject}&body=${encodeURIComponent(emailBody)}`;
