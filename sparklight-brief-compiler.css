@@ -700,3 +700,11 @@ button.primary{
     margin:.35in;
   }
 }
+
+
+.email-helper{
+  margin:14px 0 0;
+  color:#8a9298;
+  font-size:.78rem;
+  text-align:center;
+}
