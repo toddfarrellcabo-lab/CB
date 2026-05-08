@@ -653,7 +653,7 @@ button.primary{
         <button type="button" onclick="printSummary()">Print Summary</button>
         <button type="button" onclick="emailBrief()">Email Brief</button>
       </div>
-      <p class="email-helper">Email submit will download a clean CSV first. Attach that file to the email before sending.</p>
+      <p class="email-helper">Email Brief opens a preformatted email body. Use Print Sheet separately when a designed PDF is needed.</p>
     </form>
   </main>
 
@@ -879,9 +879,79 @@ function copyBrief(){
 
 function emailBrief(){
   if(!validateBrief()) return;
-  downloadCsv();
-  const subject = encodeURIComponent("Creative Brief Submission");
-  const body = encodeURIComponent("Creative brief CSV generated. Please attach the downloaded file named sparklight_creative_brief.csv before sending.");
+
+  generateExecutiveBrief();
+
+  const projectName = val("projectName", "New Project");
+  const subject = encodeURIComponent("Creative Brief Submission: " + projectName);
+
+  const agency = agencyValue() || "Not provided";
+  const deliverables = deliverableValue() || "Not provided";
+
+  const body = encodeURIComponent(
+`YE OLE CREATIVE BRIEF COMPILER
+
+PROJECT
+${projectName}
+
+Requestor: ${val("firstName","")} ${val("lastName","")}
+Campaign Name: ${val("timeline")}
+Launch Date: ${formatDate(val("launchDate","")) || "Not provided"}
+Due By: ${formatDate(val("dueBy","")) || "Not provided"}
+Market / Region: ${val("market")}
+Strategy Lead: ${val("strategyLead")}
+Creative Agency: ${agency}
+
+OBJECTIVE
+${val("objective")}
+
+THE BIG IDEA
+${val("smp")}
+
+BACKGROUND
+${val("background")}
+
+AUDIENCE
+${val("targetAudienceType")}
+${val("targetAudience")}
+
+INSIGHT
+${val("insight")}
+
+BEHAVIOR SHIFT
+${val("behavior")}
+
+ENEMY / TENSION
+${val("enemy")}
+
+EMOTIONAL HOOK & TONE
+${val("tone")}
+
+KEY MESSAGING
+${val("keyMessaging")}
+
+OFFERS
+1. ${val("offer1","")} | ${val("secondary1","")} | ${val("cta1","")}
+2. ${val("offer2","")} | ${val("secondary2","")} | ${val("cta2","")}
+3. ${val("offer3","")} | ${val("secondary3","")} | ${val("cta3","")}
+
+DELIVERABLES
+${deliverables}
+
+DELIVERABLE DETAILS
+${val("deliverables")}
+
+MANDATORIES / LEGALS
+${val("mandatories")}
+
+ADDITIONAL NOTES
+${val("additionalNotes")}
+
+—
+© 2026 Sparklight®
+A Problematic Tool.`
+  );
+
   window.location.href = `mailto:${hiddenRecipient}?subject=${subject}&body=${body}`;
 }
 
