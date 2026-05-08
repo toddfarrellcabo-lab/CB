@@ -197,7 +197,7 @@ input:focus,select:focus,textarea:focus{
 
 .actions{
   display:grid;
-  grid-template-columns:repeat(7,1fr);
+  grid-template-columns:repeat(4,1fr);
   gap:14px;
   margin-top:40px;
 }
@@ -466,8 +466,72 @@ button.primary{
   .brief-sheet-header h2{font-size:28pt}
   .brief-callout p{font-size:12pt}
   .brief-panel{break-inside:avoid;min-height:auto}
-  @page{size:letter;margin:.35in}
+  @page{size:letter;margin:.25in}
 }
+
+.choice-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+
+.deliverable-choice-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+.choice-pill{
+  min-height:46px;
+  padding:12px 14px;
+  border:1px solid var(--sp-line);
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:#263238;
+  font-size:.9rem;
+  font-weight:700;
+  background:#fff;
+  cursor:pointer;
+}
+
+.choice-pill input{
+  width:auto;
+  min-height:auto;
+  accent-color:var(--sp-purple);
+}
+
+.disclaimer-upload{
+  display:inline-flex;
+  width:max-content;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:13px 22px;
+  border-radius:999px;
+  background:var(--sp-purple);
+  color:#fff;
+  font-weight:800;
+  cursor:pointer;
+  margin-bottom:0;
+}
+
+.disclaimer-upload input{
+  display:none;
+}
+
+.micro-note{
+  margin:8px 0 0;
+  color:#8a9298;
+  font-size:.78rem;
+}
+
+@media(max-width:900px){
+  .choice-grid,
+  .deliverable-choice-grid{
+    grid-template-columns:1fr;
+  }
+}
+
 </style>
 </head>
 
@@ -489,10 +553,20 @@ button.primary{
           <div class="field full"><label for="projectName">Project Name *</label><input id="projectName" name="Project Name" required placeholder="Enter project name"></div>
           <div class="field"><label for="firstName">Requestor’s First Name *</label><input id="firstName" name="Requestor First Name" required placeholder="First name"></div>
           <div class="field"><label for="lastName">Requestor’s Last Name *</label><input id="lastName" name="Requestor Last Name" required placeholder="Last name"></div>
-          <div class="field"><label for="timeline">Campaign Timeline</label><input id="timeline" name="Campaign Timeline" placeholder="Example: Q3, evergreen, launch window"></div>
-          <div class="field"><label for="launchDate">Due / Launch Date</label><input id="launchDate" name="Due / Launch Date" type="date"></div>
+          <div class="field"><label for="timeline">Campaign Name</label><input id="timeline" name="Campaign Name" placeholder="Example: Q3 Fiber Expansion Awareness"></div>
+          <div class="field"><label for="launchDate">Launch Date</label><input id="launchDate" name="Launch Date" type="date"></div>
+          <div class="field"><label for="dueBy">Due By</label><input id="dueBy" name="Due By" type="date"></div>
           <div class="field"><label for="strategyLead">Strategy Lead</label><input id="strategyLead" name="Strategy Lead" placeholder="Name"></div>
-          <div class="field"><label for="agency">Creative Agency</label><input id="agency" name="Creative Agency" placeholder="Agency or internal team"></div>
+          <div class="field full">
+            <label>Creative Agency</label>
+            <div class="choice-grid" role="group" aria-label="Creative Agency">
+              <label class="choice-pill"><input type="checkbox" name="agencyChoice" value="Internal Creative Agency"> Internal Creative Agency</label>
+              <label class="choice-pill"><input type="checkbox" name="agencyChoice" value="Manifesto"> Manifesto</label>
+              <label class="choice-pill"><input type="checkbox" name="agencyChoice" value="Superside"> Superside</label>
+              <label class="choice-pill"><input type="checkbox" name="agencyChoice" value="Other"> Other</label>
+            </div>
+            <input id="agencyOther" name="Creative Agency Other" placeholder="Other agency name" style="margin-top:12px;">
+          </div>
         </div>
       </section>
 
@@ -530,9 +604,29 @@ button.primary{
         <h3 class="section-title">Execution</h3>
         <div class="grid">
           <div class="field"><label for="budget">Budget <span class="hint">(Optional)</span></label><select id="budget" name="Budget"><option value="">Select an option</option><option>Not confirmed</option><option>Under $5K</option><option>$5K–$15K</option><option>$15K–$50K</option><option>$50K+</option></select></div>
-          <div class="field"><label for="deliverableType">Desired Deliverables *</label><select id="deliverableType" name="Desired Deliverables Type" required><option value="">Select an option</option><option>Digital display</option><option>Meta / social</option><option>Email</option><option>Direct mail</option><option>Landing page</option><option>Video</option><option>Print / OOH</option><option>Full campaign mix</option></select></div>
+          <div class="field full">
+            <label>Desired Deliverables *</label>
+            <div class="choice-grid deliverable-choice-grid" role="group" aria-label="Desired Deliverables">
+              <label class="choice-pill"><input type="checkbox" name="deliverableChoice" value="Digital display"> Digital display</label>
+              <label class="choice-pill"><input type="checkbox" name="deliverableChoice" value="Meta / social"> Meta / social</label>
+              <label class="choice-pill"><input type="checkbox" name="deliverableChoice" value="Email"> Email</label>
+              <label class="choice-pill"><input type="checkbox" name="deliverableChoice" value="Direct mail"> Direct mail</label>
+              <label class="choice-pill"><input type="checkbox" name="deliverableChoice" value="Landing page"> Landing page</label>
+              <label class="choice-pill"><input type="checkbox" name="deliverableChoice" value="Video"> Video</label>
+              <label class="choice-pill"><input type="checkbox" name="deliverableChoice" value="Print / OOH"> Print / OOH</label>
+              <label class="choice-pill"><input type="checkbox" name="deliverableChoice" value="Full campaign mix"> Full campaign mix</label>
+            </div>
+          </div>
           <div class="field full"><label for="campaignRound">Campaign Round / Flight <span class="hint">(Optional)</span></label><input id="campaignRound" name="Campaign Round / Flight" placeholder="Select or enter"></div>
           <div class="field full"><label for="deliverables">Deliverables Detail</label><textarea id="deliverables" name="Deliverables Detail" placeholder="List tactical executions needed, i.e. video :30, display assets, email, landing page, etc."></textarea></div>
+          <div class="field full">
+            <label>Project Disclaimers / Legals</label>
+            <label class="disclaimer-upload">
+              <input id="disclaimerFiles" name="Disclaimer Files" type="file" multiple>
+              Upload Disclaimers
+            </label>
+            <p class="micro-note">Upload approved legal copy, disclaimer docs, offer language, or project-specific legal references.</p>
+          </div>
           <div class="field full"><label for="mandatories">Mandatories</label><textarea id="mandatories" name="Mandatories" placeholder="Required logos, legal copy, URLs, phone numbers, market names, specs, or offer details."></textarea></div>
           <div class="field full"><label for="additionalNotes">Additional Notes / Details</label><textarea id="additionalNotes" name="Additional Notes / Details" placeholder="Share any additional context, notes, or important details..."></textarea></div>
         </div>
@@ -555,7 +649,8 @@ button.primary{
         <button type="button" onclick="downloadCsv()">Download CSV</button>
         <button type="button" onclick="copyBrief()">Copy Brief</button>
         <button type="button" onclick="generateExecutiveBrief()">Preview One-Sheet</button>
-        <button type="button" onclick="printExecutiveBrief()">Print / Save PDF</button>
+        <button type="button" onclick="printExecutiveBrief()">Print Sheet</button>
+        <button type="button" onclick="printSummary()">Print Summary</button>
         <button type="button" onclick="emailBrief()">Email Brief</button>
       </div>
       <p class="email-helper">Email submit will download a clean CSV first. Attach that file to the email before sending.</p>
@@ -612,10 +707,11 @@ const fields = [
   ["Project Name", "projectName"],
   ["Requestor First Name", "firstName"],
   ["Requestor Last Name", "lastName"],
-  ["Campaign Timeline", "timeline"],
-  ["Due / Launch Date", "launchDate"],
+  ["Campaign Name", "timeline"],
+  ["Launch Date", "launchDate"],
+  ["Due By", "dueBy"],
   ["Strategy Lead", "strategyLead"],
-  ["Creative Agency", "agency"],
+  ["Creative Agency", "agencyChoices"],
   ["Background", "background"],
   ["Single-Minded Proposition", "smp"],
   ["Insight", "insight"],
@@ -637,7 +733,7 @@ const fields = [
   ["Secondary Push 3", "secondary3"],
   ["Primary CTA 3", "cta3"],
   ["Budget", "budget"],
-  ["Desired Deliverables Type", "deliverableType"],
+  ["Desired Deliverables", "deliverableChoices"],
   ["Campaign Round / Flight", "campaignRound"],
   ["Deliverables Detail", "deliverables"],
   ["Mandatories", "mandatories"],
@@ -649,6 +745,24 @@ function val(id, fallback="Not provided"){
   const el = document.getElementById(id);
   const value = el ? String(el.value || "").trim() : "";
   return value || fallback;
+}
+
+
+function checkedValues(name){
+  return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(el => el.value);
+}
+
+function agencyValue(){
+  const selected = checkedValues("agencyChoice");
+  const other = val("agencyOther", "");
+  if(selected.includes("Other") && other){
+    return selected.filter(v => v !== "Other").concat(`Other: ${other}`).join(", ");
+  }
+  return selected.join(", ");
+}
+
+function deliverableValue(){
+  return checkedValues("deliverableChoice").join(", ");
 }
 
 function setVal(id, value){
@@ -668,14 +782,48 @@ function formatDate(value){
   return `${parts[1]}/${parts[2]}/${parts[0]}`;
 }
 
+
 function validateBrief(){
   const form = document.getElementById("briefForm");
   if(!form.checkValidity()){
     form.reportValidity();
     return false;
   }
+  if(!checkedValues("deliverableChoice").length){
+    showToast("Please select at least one desired deliverable.");
+    return false;
+  }
   return true;
 }
+
+function printSummary(){
+  if(!validateBrief()) return;
+  const rows = getRows();
+  const tableRows = rows.map(([label, value]) => `<tr><th>${label}</th><td>${value}</td></tr>`).join("");
+  const printWindow = window.open("", "_blank", "width=900,height=1100");
+  if(!printWindow){
+    showToast("Popup blocked. Allow popups to open print summary.");
+    return;
+  }
+
+  printWindow.document.open();
+  printWindow.document.write(`<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Creative Brief Summary</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;color:#263238;margin:0;padding:.45in;background:#fff}
+h1{color:#8e3c91;font-size:26px;margin:0 0 18px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{border:1px solid #ddd5e2;padding:9px 10px;text-align:left;vertical-align:top}
+th{width:28%;background:#fbf7fc;color:#8e3c91}
+@media print{@page{size:letter;margin:.35in}body{padding:0}}
+</style></head><body>
+<h1>Creative Brief Summary</h1>
+<table>${tableRows}</table>
+</body></html>`);
+  printWindow.document.close();
+  printWindow.focus();
+}
+
 
 function showToast(message){
   const toast = document.getElementById("toast");
@@ -687,7 +835,9 @@ function showToast(message){
 function getRows(){
   return fields.map(([label,id]) => {
     let value = val(id, "");
-    if(id === "launchDate") value = formatDate(value);
+    if(id === "agencyChoices") value = agencyValue();
+    if(id === "deliverableChoices") value = deliverableValue();
+    if(id === "launchDate" || id === "dueBy") value = formatDate(value);
     return [label, value || "Not provided"];
   });
 }
@@ -743,7 +893,7 @@ function generateExecutiveBrief(){
   if(!validateBrief()) return;
 
   setText("sheetProjectName", val("projectName"));
-  setText("sheetMeta", `${val("timeline")} • ${val("objective")} • ${val("market")}`);
+  setText("sheetMeta", `${val("timeline")} • ${val("objective")} • ${val("market")} • Launch: ${formatDate(val("launchDate",""))}`);
   setText("sheetSmp", val("smp"));
   setText("sheetBehavior", val("behavior"));
   setText("sheetBackground", val("background"));
@@ -752,7 +902,7 @@ function generateExecutiveBrief(){
   setText("sheetEnemy", val("enemy"));
   setText("sheetMessaging", val("keyMessaging"));
   setText("sheetTone", val("tone"));
-  setText("sheetDeliverables", `${val("deliverableType")} — ${val("deliverables")}`);
+  setText("sheetDeliverables", `${deliverableValue() || "Not provided"} — ${val("deliverables")}`);
   setText("sheetMandatories", val("mandatories"));
   setText("sheetCTA", [val("cta1",""), val("cta2",""), val("cta3","")].filter(Boolean).join(" / ") || "Not provided");
 
@@ -785,19 +935,249 @@ function generateExecutiveBrief(){
   showToast("One-sheet generated.");
 }
 
-function printExecutiveBrief(){
+
+function oneSheetMarkup(){
   generateExecutiveBrief();
-  setTimeout(() => window.print(), 350);
+
+  const sheet = document.querySelector(".brief-sheet").outerHTML;
+  const styles = document.querySelector("style").innerHTML;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Executive Creative Brief</title>
+<style>
+${styles}
+
+body{
+  background:#fff !important;
+  margin:0;
+  padding:0;
 }
+
+.print-wrap{
+  width:8.5in;
+  min-height:11in;
+  margin:0 auto;
+  padding:.35in;
+  background:#fff;
+}
+
+.brief-sheet{
+  width:100%;
+  min-height:auto;
+  box-shadow:none !important;
+  border:0 !important;
+  border-radius:0 !important;
+  padding:0 !important;
+}
+
+.brief-sheet-header{
+  padding-bottom:14px !important;
+}
+
+.brief-sheet-header h2{
+  font-size:22pt !important;
+  line-height:1 !important;
+}
+
+.brief-meta{
+  font-size:8.5pt !important;
+}
+
+.brief-logo{
+  width:1.45in !important;
+}
+
+.brief-hero-row{
+  gap:10px !important;
+  margin:14px 0 !important;
+}
+
+.brief-callout{
+  padding:13px !important;
+  border-radius:12px !important;
+}
+
+.brief-callout span{
+  font-size:7pt !important;
+  margin-bottom:5px !important;
+}
+
+.brief-callout p{
+  font-size:9pt !important;
+  line-height:1.25 !important;
+}
+
+.brief-grid{
+  gap:9px !important;
+}
+
+.brief-panel{
+  min-height:auto !important;
+  padding:11px !important;
+  border-radius:10px !important;
+}
+
+.brief-panel h3{
+  font-size:7.5pt !important;
+  margin-bottom:5px !important;
+}
+
+.brief-panel p,
+.brief-panel li{
+  font-size:7.7pt !important;
+  line-height:1.32 !important;
+}
+
+.brief-sheet-footer{
+  gap:10px !important;
+  margin-top:10px !important;
+  padding-top:10px !important;
+}
+
+.brief-sheet-footer strong{
+  font-size:7.5pt !important;
+}
+
+.brief-sheet-footer p{
+  font-size:7.6pt !important;
+  line-height:1.3 !important;
+}
+
+.print-actions{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  padding:18px;
+  border-bottom:1px solid #eee;
+}
+
+.print-actions button{
+  min-height:42px;
+  padding:9px 18px;
+}
+
+@media print{
+  @page{
+    size:letter;
+    margin:.25in;
+  }
+
+  .print-actions{
+    display:none !important;
+  }
+
+  .print-wrap{
+    width:100%;
+    min-height:auto;
+    padding:0;
+  }
+}
+
+.choice-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+
+.deliverable-choice-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+.choice-pill{
+  min-height:46px;
+  padding:12px 14px;
+  border:1px solid var(--sp-line);
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:#263238;
+  font-size:.9rem;
+  font-weight:700;
+  background:#fff;
+  cursor:pointer;
+}
+
+.choice-pill input{
+  width:auto;
+  min-height:auto;
+  accent-color:var(--sp-purple);
+}
+
+.disclaimer-upload{
+  display:inline-flex;
+  width:max-content;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:13px 22px;
+  border-radius:999px;
+  background:var(--sp-purple);
+  color:#fff;
+  font-weight:800;
+  cursor:pointer;
+  margin-bottom:0;
+}
+
+.disclaimer-upload input{
+  display:none;
+}
+
+.micro-note{
+  margin:8px 0 0;
+  color:#8a9298;
+  font-size:.78rem;
+}
+
+@media(max-width:900px){
+  .choice-grid,
+  .deliverable-choice-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+</style>
+</head>
+<body>
+  <div class="print-actions">
+    <button onclick="window.print()">Print / Save PDF</button>
+    <button onclick="window.close()">Close</button>
+  </div>
+  <main class="print-wrap">${sheet}</main>
+</body>
+</html>`;
+}
+
+function printExecutiveBrief(){
+  if(!validateBrief()) return;
+
+  generateExecutiveBrief();
+
+  const printWindow = window.open("", "_blank", "width=900,height=1100");
+  if(!printWindow){
+    showToast("Popup blocked. Allow popups to open print view.");
+    return;
+  }
+
+  printWindow.document.open();
+  printWindow.document.write(oneSheetMarkup());
+  printWindow.document.close();
+  printWindow.focus();
+}
+
 
 function fillDemoData(){
   setVal("projectName","Q3 Fiber Expansion Awareness Campaign");
   setVal("firstName","Taylor");
   setVal("lastName","Farrell");
-  setVal("timeline","Q3 2026 Fiber Expansion");
+  setVal("timeline","Q3 Fiber Expansion Awareness");
   setVal("launchDate","2026-08-15");
+  setVal("dueBy","2026-07-15");
   setVal("strategyLead","Creative Strategy Team");
-  setVal("agency","Internal Creative Services");
+  document.querySelector('input[name="agencyChoice"][value="Internal Creative Agency"]').checked = true;
   setVal("background","New fiber expansion markets require awareness and consideration creative that positions Sparklight as the premium local provider.");
   setVal("smp","Fiber internet should feel reliable, simple, and built for modern households.");
   setVal("insight","Consumers are frustrated with inconsistent providers and unclear pricing.");
@@ -819,7 +1199,10 @@ function fillDemoData(){
   setVal("secondary3","Whole Home WiFi");
   setVal("cta3","Get Started");
   setVal("budget","$15K–$50K");
-  setVal("deliverableType","Full campaign mix");
+  ["Meta / social","Email","Landing page","Video"].forEach(v => {
+    const box = document.querySelector(`input[name="deliverableChoice"][value="${v}"]`);
+    if(box) box.checked = true;
+  });
   setVal("campaignRound","SPK_Q326_FiberExpansion");
   setVal("deliverables","Meta ads, HTML5 display, landing page hero refresh, email campaign, :15 video.");
   setVal("mandatories","Use current Sparklight fiber positioning, approved legal disclaimers, and Q3 rate card pricing.");
